@@ -30,7 +30,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const require = createRequire(import.meta.url);
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:[
+    "http://localhost:5173",
+    "https://interviewiq-ai-platform.netlify.app"
+  ],
     credentials:true
 }))
 
