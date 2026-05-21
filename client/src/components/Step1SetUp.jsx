@@ -55,21 +55,52 @@ function Step1SetUp({ onStart }) {
     }
 
     const handleStart = async () => {
-        setLoading(true)
-        try {
-           const result = await axios.post(ServerUrl + "/api/interview/generate-questions" , {role, experience, mode , resumeText, projects, skills } , {withCredentials:true}) 
-           console.log(result.data)
-           if(userData){
-            dispatch(setUserData({...userData , credits:result.data.creditsLeft}))
-           }
-           setLoading(false)
-           onStart(result.data)
+    setLoading(true);
 
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
+    try {
+        const payload = {
+            role,
+            experience,
+            mode,
+            resumeText,
+            projects,
+            skills
+        };
+
+        console.log("Sending payload:", payload);
+
+        const result = await axios.post(
+            ServerUrl + "/api/interview/generate-questions",
+            payload,
+            { withCredentials: true }
+        );
+
+        console.log("Response:", result.data);
+
+        if (userData) {
+            dispatch(
+                setUserData({
+                    ...userData,
+                    credits: result.data.creditsLeft
+                })
+            );
         }
+
+        setLoading(false);
+        onStart(result.data);
+
+    } catch (error) {
+        console.log("FULL ERROR:", error);
+        console.log("SERVER RESPONSE:", error.response?.data);
+
+        alert(
+            error.response?.data?.message ||
+            "Failed to start interview."
+        );
+
+        setLoading(false);
     }
+};
     return (
         <motion.div
             initial={{ opacity: 0 }}
