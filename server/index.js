@@ -32,7 +32,7 @@ const require = createRequire(import.meta.url);
 app.use(cors({
     origin: [
         "http://localhost:5173",
-        "https://interviewiq-ai-platform.netlify.app",
+        "https://ai-powered-mock-interview-platform-gamma.vercel.app",
         "https://interviewiq-ai-platform.onrender.com"
     ],
     credentials: true
